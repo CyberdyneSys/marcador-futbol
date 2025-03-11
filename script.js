@@ -3,7 +3,7 @@ let seconds = 0;
 let running = false;
 let scores = { team1: 0, team2: 0 };
 
-// Función para iniciar el cronómetro
+// Iniciar el cronómetro
 function startTimer() {
     if (!running) {
         running = true;
@@ -13,41 +13,41 @@ function startTimer() {
             let secs = seconds % 60;
             const timeText = 
                 (minutes < 10 ? "0" : "") + minutes + ":" + (secs < 10 ? "0" : "") + secs;
-            document.getElementById("timer").textContent = timeText;
+            document.getElementById("timer").querySelector("span").textContent = timeText;
             syncOverlay();
         }, 1000);
     }
 }
 
-// Función para reiniciar el cronómetro
+// Reiniciar el cronómetro
 function resetTimer() {
     clearInterval(timer);
     running = false;
     seconds = 0;
-    document.getElementById("timer").textContent = "00:00";
+    document.getElementById("timer").querySelector("span").textContent = "00:00";
     syncOverlay();
 }
 
-// Función para incrementar el marcador
+// Aumentar marcador de un equipo
 function increaseScore(team) {
     scores[team]++;
     document.getElementById(team === "team1" ? "score1" : "score2").textContent = scores[team];
     syncOverlay();
 }
 
-// Función para sincronizar los datos con el overlay
+// Sincronizar datos con el overlay
 function syncOverlay() {
     const data = {
         team1: document.getElementById("team1-name").textContent,
         team2: document.getElementById("team2-name").textContent,
         score1: scores.team1,
         score2: scores.team2,
-        timer: document.getElementById("timer").textContent
+        timer: document.getElementById("timer").querySelector("span").textContent
     };
     localStorage.setItem("overlayData", JSON.stringify(data));
 }
 
-// Función para cargar los datos en el overlay
+// Cargar datos en el overlay
 function loadOverlayData() {
     const data = JSON.parse(localStorage.getItem("overlayData"));
     if (data) {
@@ -59,12 +59,12 @@ function loadOverlayData() {
     }
 }
 
-// Para el overlay, cargamos los datos al abrir la página
+// Ejecutar carga si estamos en el overlay
 if (window.location.pathname.includes("overlay.html")) {
     loadOverlayData();
 }
 
-// Función para copiar la URL del overlay
+// Copiar URL del overlay al portapapeles
 function copyOverlayURL() {
     const overlayURL = window.location.origin + '/overlay.html';
     navigator.clipboard.writeText(overlayURL)
