@@ -13,7 +13,7 @@ function startTimer() {
             let secs = seconds % 60;
             const timeText = 
                 (minutes < 10 ? "0" : "") + minutes + ":" + (secs < 10 ? "0" : "") + secs;
-            document.getElementById("timer").querySelector("span").textContent = timeText;
+            document.getElementById("timer").textContent = timeText;
             syncOverlay();
         }, 1000);
     }
@@ -24,7 +24,7 @@ function resetTimer() {
     clearInterval(timer);
     running = false;
     seconds = 0;
-    document.getElementById("timer").querySelector("span").textContent = "00:00";
+    document.getElementById("timer").textContent = "00:00";
     syncOverlay();
 }
 
@@ -51,7 +51,7 @@ function syncOverlay() {
         team2: document.getElementById("team2-name").textContent,
         score1: scores.team1,
         score2: scores.team2,
-        timer: document.getElementById("timer").querySelector("span").textContent
+        timer: document.getElementById("timer").textContent
     };
     localStorage.setItem("overlayData", JSON.stringify(data));
 }
