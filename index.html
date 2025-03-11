@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="app">
+    <div id="overlay">
         <div id="scoreboard">
             <div class="team">
                 <img id="team1-logo" src="team1.png" alt="Team 1">
@@ -22,15 +22,15 @@
             </div>
         </div>
         <div id="timer">00:00</div>
+    </div>
 
-        <!-- Controles de interacción -->
-        <div id="controls">
-            <button onclick="increaseScore('team1')">+ Gol Equipo 1</button>
-            <button onclick="increaseScore('team2')">+ Gol Equipo 2</button>
-            <button onclick="startTimer()">Iniciar Cronómetro</button>
-            <button onclick="resetTimer()">Reiniciar Cronómetro</button>
-            <button onclick="copyOverlayURL()">Copiar URL Overlay</button>
-        </div>
+    <!-- Controles de interacción -->
+    <div id="controls">
+        <button onclick="increaseScore('team1')">+ Gol Equipo 1</button>
+        <button onclick="increaseScore('team2')">+ Gol Equipo 2</button>
+        <button onclick="startTimer()">Iniciar Cronómetro</button>
+        <button onclick="resetTimer()">Reiniciar Cronómetro</button>
+        <button onclick="copyOverlayURL()">Copiar URL Overlay</button>
     </div>
 
     <script src="script.js"></script>
