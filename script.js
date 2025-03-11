@@ -1,46 +1,23 @@
-let score1 = 0;
-let score2 = 0;
-let minutes = 0;
+let timer;
 let seconds = 0;
-let timerRunning = false;
-let interval;
-
-function changeScore(team, value) {
-    if (team === 1) {
-        score1 = Math.max(0, score1 + value);
-        document.getElementById('score1').textContent = score1;
-    } else {
-        score2 = Math.max(0, score2 + value);
-        document.getElementById('score2').textContent = score2;
-    }
-}
+let running = false;
 
 function startTimer() {
-    if (!timerRunning) {
-        timerRunning = true;
-        interval = setInterval(() => {
+    if (!running) {
+        running = true;
+        timer = setInterval(() => {
             seconds++;
-            if (seconds === 60) {
-                seconds = 0;
-                minutes++;
-            }
-            document.getElementById('timer').textContent = 
-                (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+            let minutes = Math.floor(seconds / 60);
+            let secs = seconds % 60;
+            document.getElementById("timer").textContent = 
+                (minutes < 10 ? "0" : "") + minutes + ":" + (secs < 10 ? "0" : "") + secs;
         }, 1000);
     }
 }
 
 function resetTimer() {
-    clearInterval(interval);
-    timerRunning = false;
-    minutes = 0;
+    clearInterval(timer);
+    running = false;
     seconds = 0;
-    document.getElementById('timer').textContent = '00:00';
-}
-
-function copyOverlayURL() {
-    const url = window.location.href + "?overlay=true";
-    navigator.clipboard.writeText(url).then(() => {
-        alert("URL copiada al portapapeles: " + url);
-    });
+    document.getElementById("timer").textContent = "00:00";
 }
