@@ -1,17 +1,32 @@
-function updateOverlay() {
-    fetch('data.json')
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById("team1-name").textContent = data.team1;
-            document.getElementById("team2-name").textContent = data.team2;
-            document.getElementById("score1").textContent = data.score1;
-            document.getElementById("score2").textContent = data.score2;
-            document.getElementById("timer").textContent = data.timer;
-            document.getElementById("team1-logo").src = data.team1Logo;
-            document.getElementById("team2-logo").src = data.team2Logo;
-        })
-        .catch(error => console.error('Error al cargar los datos:', error));
+let timer;
+let seconds = 0;
+let running = false;
+let scores = { team1: 0, team2: 0 };
+
+// Función para iniciar el cronómetro
+function startTimer() {
+    if (!running) {
+        running = true;
+        timer = setInterval(() => {
+            seconds++;
+            let minutes = Math.floor(seconds / 60);
+            let secs = seconds % 60;
+            document.getElementById("timer").textContent = 
+                (minutes < 10 ? "0" : "") + minutes + ":" + (secs < 10 ? "0" : "") + secs;
+        }, 1000);
+    }
 }
 
-// Actualiza el marcador cada segundo
-setInterval(updateOverlay, 1000);
+// Función para reiniciar el cronómetro
+function resetTimer() {
+    clearInterval(timer);
+    running = false;
+    seconds = 0;
+    document.getElementById("timer").textContent = "00:00";
+}
+
+// Función para incrementar el marcador
+function increaseScore(team) {
+    scores[team]++;
+    document.getElementById(team === "team1" ? "score1" : "score2").textContent = scores[team];
+}
