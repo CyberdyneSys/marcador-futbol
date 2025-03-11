@@ -1,23 +1,17 @@
-const WebSocket = require('ws');
-const wss = new WebSocket.Server({ port: 8080 });
+function updateOverlay() {
+    fetch('data.json')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("team1-name").textContent = data.team1;
+            document.getElementById("team2-name").textContent = data.team2;
+            document.getElementById("score1").textContent = data.score1;
+            document.getElementById("score2").textContent = data.score2;
+            document.getElementById("timer").textContent = data.timer;
+            document.getElementById("team1-logo").src = data.team1Logo;
+            document.getElementById("team2-logo").src = data.team2Logo;
+        })
+        .catch(error => console.error('Error al cargar los datos:', error));
+}
 
-wss.on('connection', (ws) => {
-    console.log('Cliente conectado.');
-
-    setInterval(() => {
-        const data = {
-            team1: "Equipo A",
-            team2: "Equipo B",
-            score1: Math.floor(Math.random() * 10),
-            score2: Math.floor(Math.random() * 10),
-            timer: new Date().toLocaleTimeString(),
-            team1Logo: "team1.png",
-            team2Logo: "team2.png",
-        };
-        ws.send(JSON.stringify(data));
-    }, 1000);
-
-    ws.on('close', () => {
-        console.log('Cliente desconectado.');
-    });
-});
+// Actualiza el marcador cada segundo
+setInterval(updateOverlay, 1000);
