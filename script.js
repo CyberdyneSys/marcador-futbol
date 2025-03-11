@@ -1,23 +1,24 @@
-let timer;
-let seconds = 0;
-let running = false;
+const socket = new WebSocket('ws://tu-servidor.com:8080'); // Cambia la URL por la de tu servidor
 
-function startTimer() {
-    if (!running) {
-        running = true;
-        timer = setInterval(() => {
-            seconds++;
-            let minutes = Math.floor(seconds / 60);
-            let secs = seconds % 60;
-            document.getElementById("timer").textContent = 
-                (minutes < 10 ? "0" : "") + minutes + ":" + (secs < 10 ? "0" : "") + secs;
-        }, 1000);
-    }
-}
+socket.onopen = () => {
+    console.log('Conexión con WebSocket establecida.');
+};
 
-function resetTimer() {
-    clearInterval(timer);
-    running = false;
-    seconds = 0;
-    document.getElementById("timer").textContent = "00:00";
-}
+socket.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    document.getElementById("team1-name").textContent = data.team1;
+    document.getElementById("team2-name").textContent = data.team2;
+    document.getElementById("score1").textContent = data.score1;
+    document.getElementById("score2").textContent = data.score2;
+    document.getElementById("timer").textContent = data.timer;
+    document.getElementById("team1-logo").src = data.team1Logo;
+    document.getElementById("team2-logo").src = data.team2Logo;
+};
+
+socket.onerror = (error) => {
+    console.error('Error en la conexión de WebSocket:', error);
+};
+
+socket.onclose = () => {
+    console.log('Conexión con WebSocket cerrada.');
+};
