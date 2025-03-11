@@ -1,24 +1,23 @@
-const socket = new WebSocket('ws://localhost:8080'); // Cambia la URL según tu servidor
+const WebSocket = require('ws');
+const wss = new WebSocket.Server({ port: 8080 });
 
-socket.onopen = () => {
-    console.log('Conexión con WebSocket establecida.');
-};
+wss.on('connection', (ws) => {
+    console.log('Cliente conectado.');
 
-socket.onmessage = (event) => {
-    const data = JSON.parse(event.data);
-    document.getElementById("team1-name").textContent = data.team1;
-    document.getElementById("team2-name").textContent = data.team2;
-    document.getElementById("score1").textContent = data.score1;
-    document.getElementById("score2").textContent = data.score2;
-    document.getElementById("timer").textContent = data.timer;
-    document.getElementById("team1-logo").src = data.team1Logo;
-    document.getElementById("team2-logo").src = data.team2Logo;
-};
+    setInterval(() => {
+        const data = {
+            team1: "Equipo A",
+            team2: "Equipo B",
+            score1: Math.floor(Math.random() * 10),
+            score2: Math.floor(Math.random() * 10),
+            timer: new Date().toLocaleTimeString(),
+            team1Logo: "team1.png",
+            team2Logo: "team2.png",
+        };
+        ws.send(JSON.stringify(data));
+    }, 1000);
 
-socket.onerror = (error) => {
-    console.error('Error en la conexión de WebSocket:', error);
-};
-
-socket.onclose = () => {
-    console.log('Conexión con WebSocket cerrada.');
-};
+    ws.on('close', () => {
+        console.log('Cliente desconectado.');
+    });
+});
