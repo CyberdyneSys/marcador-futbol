@@ -13,16 +13,20 @@
             <div class="team">
                 <img id="team1-logo" src="team1.png" alt="Team 1">
                 <span id="team1-name">Equipo 1</span>
-                <span class="score" id="score1">0</span>
-                <button onclick="increaseScore('team1')">+</button>
-                <button onclick="decreaseScore('team1')">-</button>
+                <div class="score-controls">
+                    <button class="score-button" onclick="increaseScore('team1')">+</button>
+                    <span class="score" id="score1">0</span>
+                    <button class="score-button" onclick="decreaseScore('team1')">-</button>
+                </div>
             </div>
             <span>-</span>
             <!-- Equipo 2 -->
             <div class="team">
-                <button onclick="increaseScore('team2')">+</button>
-                <button onclick="decreaseScore('team2')">-</button>
-                <span class="score" id="score2">0</span>
+                <div class="score-controls">
+                    <button class="score-button" onclick="increaseScore('team2')">+</button>
+                    <span class="score" id="score2">0</span>
+                    <button class="score-button" onclick="decreaseScore('team2')">-</button>
+                </div>
                 <span id="team2-name">Equipo 2</span>
                 <img id="team2-logo" src="team2.png" alt="Team 2">
             </div>
