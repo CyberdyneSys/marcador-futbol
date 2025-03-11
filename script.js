@@ -14,7 +14,7 @@ function startTimer() {
             const timeText = 
                 (minutes < 10 ? "0" : "") + minutes + ":" + (secs < 10 ? "0" : "") + secs;
             document.getElementById("timer").textContent = timeText;
-            updateOverlay({ timer: timeText });
+            syncOverlay();
         }, 1000);
     }
 }
@@ -24,29 +24,47 @@ function resetTimer() {
     clearInterval(timer);
     running = false;
     seconds = 0;
-    const timeText = "00:00";
-    document.getElementById("timer").textContent = timeText;
-    updateOverlay({ timer: timeText });
+    document.getElementById("timer").textContent = "00:00";
+    syncOverlay();
 }
 
 // Función para incrementar el marcador
 function increaseScore(team) {
     scores[team]++;
-    const scoreText = scores[team];
-    document.getElementById(team === "team1" ? "score1" : "score2").textContent = scoreText;
-    updateOverlay({ [team]: scoreText });
+    document.getElementById(team === "team1" ? "score1" : "score2").textContent = scores[team];
+    syncOverlay();
 }
 
-// Función para actualizar el overlay en tiempo real
-function updateOverlay(changes) {
-    fetch('/update-overlay', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(changes),
-    }).catch(error => console.error("Error al actualizar el overlay:", error));
+// Función para sincronizar los datos con el overlay
+function syncOverlay() {
+    const data = {
+        team1: document.getElementById("team1-name").textContent,
+        team2: document.getElementById("team2-name").textContent,
+        score1: scores.team1,
+        score2: scores.team2,
+        timer: document.getElementById("timer").textContent
+    };
+    localStorage.setItem("overlayData", JSON.stringify(data));
 }
 
-// Función para copiar la URL del overlay al portapapeles
+// Función para cargar los datos en el overlay
+function loadOverlayData() {
+    const data = JSON.parse(localStorage.getItem("overlayData"));
+    if (data) {
+        document.getElementById("team1-name").textContent = data.team1;
+        document.getElementById("team2-name").textContent = data.team2;
+        document.getElementById("score1").textContent = data.score1;
+        document.getElementById("score2").textContent = data.score2;
+        document.getElementById("timer").textContent = data.timer;
+    }
+}
+
+// Para el overlay, cargamos los datos al abrir la página
+if (window.location.pathname.includes("overlay.html")) {
+    loadOverlayData();
+}
+
+// Función para copiar la URL del overlay
 function copyOverlayURL() {
     const overlayURL = window.location.origin + '/overlay.html';
     navigator.clipboard.writeText(overlayURL)
