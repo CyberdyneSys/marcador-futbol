@@ -1,4 +1,4 @@
-const socket = new WebSocket('ws://tu-servidor.com:8080'); // Cambia la URL por la de tu servidor
+const socket = new WebSocket('ws://localhost:8080'); // Cambia la URL según tu servidor
 
 socket.onopen = () => {
     console.log('Conexión con WebSocket establecida.');
