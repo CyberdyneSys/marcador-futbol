@@ -1,3 +1,5 @@
+const socket = new WebSocket('ws://localhost:8080'); // Cambia esto según tu servidor
+
 let timer;
 let seconds = 0;
 let running = false;
@@ -44,7 +46,7 @@ function decreaseScore(team) {
     }
 }
 
-// Sincronizar datos con el overlay
+// Sincronizar datos con el overlay (enviar mediante WebSocket)
 function syncOverlay() {
     const data = {
         team1: document.getElementById("team1-name").textContent,
@@ -53,25 +55,18 @@ function syncOverlay() {
         score2: scores.team2,
         timer: document.getElementById("timer").textContent
     };
-    localStorage.setItem("overlayData", JSON.stringify(data));
+    socket.send(JSON.stringify(data));
 }
 
-// Cargar datos en el overlay
-function loadOverlayData() {
-    const data = JSON.parse(localStorage.getItem("overlayData"));
-    if (data) {
-        document.getElementById("team1-name").textContent = data.team1;
-        document.getElementById("team2-name").textContent = data.team2;
-        document.getElementById("score1").textContent = data.score1;
-        document.getElementById("score2").textContent = data.score2;
-        document.getElementById("timer").textContent = data.timer;
-    }
-}
-
-// Ejecutar carga si estamos en el overlay
-if (window.location.pathname.includes("overlay.html")) {
-    loadOverlayData();
-}
+// Cargar datos en el overlay (recibir mediante WebSocket)
+socket.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    document.getElementById("team1-name").textContent = data.team1;
+    document.getElementById("team2-name").textContent = data.team2;
+    document.getElementById("score1").textContent = data.score1;
+    document.getElementById("score2").textContent = data.score2;
+    document.getElementById("timer").textContent = data.timer;
+};
 
 // Copiar URL del overlay al portapapeles
 function copyOverlayURL() {
