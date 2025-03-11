@@ -12,31 +12,25 @@
             <div class="team">
                 <img id="team1-logo" src="team1.png" alt="Team 1">
                 <span id="team1-name">Equipo 1</span>
+                <button onclick="increaseScore('team1')">+ Gol</button>
             </div>
             <span class="score" id="score1">0</span>
             <span>-</span>
             <span class="score" id="score2">0</span>
             <div class="team">
+                <button onclick="increaseScore('team2')">+ Gol</button>
                 <span id="team2-name">Equipo 2</span>
                 <img id="team2-logo" src="team2.png" alt="Team 2">
             </div>
         </div>
-        <div id="timer">00:00</div>
+        <div id="timer">
+            <span>00:00</span>
+            <button onclick="startTimer()">Iniciar</button>
+            <button onclick="resetTimer()">Reiniciar</button>
+        </div>
     </div>
 
-    <div id="controls">
-        <div class="control-group">
-            <button onclick="increaseScore('team1')">+ Gol Equipo 1</button>
-            <button onclick="increaseScore('team2')">+ Gol Equipo 2</button>
-        </div>
-        <div class="control-group">
-            <button onclick="startTimer()">Iniciar Cronómetro</button>
-            <button onclick="resetTimer()">Reiniciar Cronómetro</button>
-        </div>
-        <div class="control-group">
-            <button onclick="copyOverlayURL()">Copiar URL Overlay</button>
-        </div>
-    </div>
+    <button id="copy-url" onclick="copyOverlayURL()">Copiar URL Overlay</button>
 
     <script src="script.js"></script>
 </body>
