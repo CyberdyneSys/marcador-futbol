@@ -24,13 +24,18 @@
         <div id="timer">00:00</div>
     </div>
 
-    <!-- Controles de interacción -->
     <div id="controls">
-        <button onclick="increaseScore('team1')">+ Gol Equipo 1</button>
-        <button onclick="increaseScore('team2')">+ Gol Equipo 2</button>
-        <button onclick="startTimer()">Iniciar Cronómetro</button>
-        <button onclick="resetTimer()">Reiniciar Cronómetro</button>
-        <button onclick="copyOverlayURL()">Copiar URL Overlay</button>
+        <div class="control-group">
+            <button onclick="increaseScore('team1')">+ Gol Equipo 1</button>
+            <button onclick="increaseScore('team2')">+ Gol Equipo 2</button>
+        </div>
+        <div class="control-group">
+            <button onclick="startTimer()">Iniciar Cronómetro</button>
+            <button onclick="resetTimer()">Reiniciar Cronómetro</button>
+        </div>
+        <div class="control-group">
+            <button onclick="copyOverlayURL()">Copiar URL Overlay</button>
+        </div>
     </div>
 
     <script src="script.js"></script>
