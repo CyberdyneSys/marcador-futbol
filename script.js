@@ -3,7 +3,7 @@ let seconds = 0;
 let running = false;
 let scores = { team1: 0, team2: 0 };
 
-// Iniciar el cronómetro
+// Función para iniciar el cronómetro
 function startTimer() {
     if (!running) {
         running = true;
@@ -19,7 +19,7 @@ function startTimer() {
     }
 }
 
-// Reiniciar el cronómetro
+// Función para reiniciar el cronómetro
 function resetTimer() {
     clearInterval(timer);
     running = false;
@@ -33,6 +33,15 @@ function increaseScore(team) {
     scores[team]++;
     document.getElementById(team === "team1" ? "score1" : "score2").textContent = scores[team];
     syncOverlay();
+}
+
+// Disminuir marcador de un equipo
+function decreaseScore(team) {
+    if (scores[team] > 0) {
+        scores[team]--;
+        document.getElementById(team === "team1" ? "score1" : "score2").textContent = scores[team];
+        syncOverlay();
+    }
 }
 
 // Sincronizar datos con el overlay
